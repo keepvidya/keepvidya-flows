@@ -1,6 +1,7 @@
 {
   "name": "keepvidya-flows-desktop",
-  "version": "0.1.0",
+  "productName": "Keepvidya Flows",
+  "version": "0.1.1",
   "description": "Keepvidya Flows — local-first AI Flow apps. Own your intelligence.",
   "homepage": "https://keepvidya.com/products/flows",
   "author": {

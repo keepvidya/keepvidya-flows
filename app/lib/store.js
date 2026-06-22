@@ -27,7 +27,10 @@ function configPath() {
   return path.join(dir, 'config.json');
 }
 
-const DEFAULTS = { mode: 'local', defaultProvider: 'local', providers: {} };
+// `mode` is the first-run gate: '' means setup isn't done yet, so the renderer
+// shows the Local/BYOK installer. It is only set ('local' | 'byok') once the
+// user chooses. `defaultProvider` is the operational default and stays 'local'.
+const DEFAULTS = { mode: '', defaultProvider: 'local', providers: {} };
 
 function load() {
   try { return { ...DEFAULTS, ...JSON.parse(fs.readFileSync(configPath(), 'utf8')) }; }

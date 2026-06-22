@@ -32,6 +32,12 @@ const ICON = path.join(__dirname, 'assets', 'icon.png');
 // (and notifications are mis-attributed). Match the NSIS appId.
 app.setAppUserModelId('com.keepvidya.flows');
 
+// In dev, keep config + library in a repo-local folder so running `electron .`
+// never writes into (or reads) the INSTALLED app's profile — otherwise test
+// data leaks into the shipped app and its first-run installer gets skipped.
+// Packaged builds use the OS userData under the productName ("Keepvidya Flows").
+if (IS_DEV) app.setPath('userData', path.join(__dirname, '.dev-userdata'));
+
 let mainWindow = null;
 let tray = null;
 let manualUpdateCheck = false;
