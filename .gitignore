@@ -1,0 +1,18 @@
+# Dependencies & build output
+node_modules/
+release/
+dist/
+
+# Local dev / runtime
+.dev-userdata/
+*.log
+
+# Generated test fixtures (recreate with: node app/test/make-fixtures.js)
+app/test/fixtures/
+
+# OS / editor junk
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/

@@ -1,0 +1,74 @@
+name: Package
+
+# Push a tag like v0.2.0 → build installers for win/mac/linux AND the
+# electron-updater metadata (latest*.yml), publishing everything to the GitHub
+# Release via `electron-builder --publish always`. The website's
+# /releases/latest/download/ link then updates automatically, and installed
+# apps pick up the update and show the "Restart to update" banner.
+# (Modeled on Knovex's .github/workflows/package.yml — minus the Python
+# backend build, since Flows is Node-only.)
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  build:
+    permissions:
+      contents: write
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            platform: win
+          - os: macos-latest
+            platform: mac
+          - os: ubuntu-latest
+            platform: linux
+    runs-on: ${{ matrix.os }}
+    name: Package — ${{ matrix.platform }}
+    defaults:
+      run:
+        working-directory: app
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v5
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Package + publish with electron-builder
+        run: npx electron-builder --${{ matrix.platform }} --publish always
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CSC_IDENTITY_AUTO_DISCOVERY: "false"
+
+      - name: Verify installer + updater metadata exist
+        shell: bash
+        run: |
+          ls -lh release/ || true
+          count=$(find release/ -maxdepth 1 \( -name "*.exe" -o -name "*.dmg" -o -name "*.AppImage" \) 2>/dev/null | wc -l)
+          if [ "$count" -eq 0 ]; then echo "ERROR: no installer produced"; ls -la release/ || true; exit 1; fi
+          find release/ -maxdepth 1 -name "latest*.yml" -exec ls -lh {} \; || echo "(no latest*.yml — check publish step)"
+
+      - name: Upload installer artifact
+        uses: actions/upload-artifact@v6
+        with:
+          name: keepvidya-flows-${{ matrix.platform }}
+          path: |
+            app/release/*.exe
+            app/release/*.dmg
+            app/release/*.AppImage
+            app/release/latest*.yml
+          if-no-files-found: warn
+          retention-days: 30
