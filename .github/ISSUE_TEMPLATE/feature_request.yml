@@ -1,0 +1,40 @@
+name: Feature request
+description: Suggest an idea or a new flow for Keepvidya Flows.
+title: "[Feature]: "
+labels: ["type: feature", "status: needs-triage"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem would this solve?
+      description: What are you trying to do that Flows can't do today?
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: Your idea
+      description: Describe the flow, input, or output you'd like — and how you'd expect it to work.
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - A new flow (input → output)
+        - Document intake (PDF / DOCX / web / …)
+        - Models / BYOK providers
+        - Installer / setup
+        - Library / saved work
+        - UI / experience
+        - Other
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks
+      options:
+        - label: I searched existing issues and discussions for a similar request.
+          required: true

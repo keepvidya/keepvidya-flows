@@ -1,0 +1,64 @@
+name: Bug report
+description: Something in Keepvidya Flows isn't working as expected.
+title: "[Bug]: "
+labels: ["type: bug", "status: needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for taking the time to file a bug. The more detail, the faster we can fix it.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: A clear description of the bug, and what you expected instead.
+      placeholder: I dropped in a PDF and the storybook came out empty…
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open the app
+        2. Upload file → choose '…'
+        3. Pick 'Illustrated storybook'
+        4. See …
+    validations:
+      required: true
+  - type: dropdown
+    id: engine
+    attributes:
+      label: Which engine?
+      options:
+        - Local (bundled Shiva / Ollama)
+        - BYOK — OpenAI
+        - BYOK — Anthropic
+        - BYOK — Groq
+        - BYOK — Google Gemini
+        - BYOK — Cerebras
+        - BYOK — Ollama (custom)
+        - Not sure
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options:
+        - Windows 10/11
+        - macOS
+        - Linux
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: App version
+      description: Shown in the title bar / Settings (e.g. v0.1.0).
+      placeholder: v0.1.0
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / screenshots
+      description: Paste any error text or attach a screenshot. (Open DevTools with Ctrl+Shift+I.)
+      render: shell

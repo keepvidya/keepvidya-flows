@@ -1,0 +1,47 @@
+# Auto-applies "area:" labels to PRs based on the files they touch.
+# Used by .github/workflows/labeler.yml (actions/labeler@v5).
+
+"area: installer":
+  - changed-files:
+      - any-glob-to-any-file:
+          - "app/lib/system.js"
+          - "app/assets/installer.nsh"
+
+"area: engine":
+  - changed-files:
+      - any-glob-to-any-file:
+          - "app/lib/flowEngine.js"
+          - "app/lib/scenes.js"
+          - "app/lib/docloader.js"
+          - "app/lib/library.js"
+          - "app/lib/ollama.js"
+
+"area: providers":
+  - changed-files:
+      - any-glob-to-any-file:
+          - "app/lib/providers.js"
+          - "app/lib/store.js"
+
+"area: ui":
+  - changed-files:
+      - any-glob-to-any-file:
+          - "app/renderer/**"
+          - "app/preload.js"
+          - "prototype/**"
+
+"area: tests":
+  - changed-files:
+      - any-glob-to-any-file:
+          - "app/test/**"
+          - "TEST-PLAN.md"
+
+"area: ci":
+  - changed-files:
+      - any-glob-to-any-file:
+          - ".github/**"
+
+"area: docs":
+  - changed-files:
+      - any-glob-to-any-file:
+          - "**/*.md"
+          - "LICENSE"
